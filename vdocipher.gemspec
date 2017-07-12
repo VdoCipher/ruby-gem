@@ -1,13 +1,13 @@
 Gem::Specification.new do |s|
   s.name        = 'vdocipher'
-  s.version     = '0.0.2'
-  s.date        = '2015-09-19'
+  s.version     = '1.0.1'
+  s.date        = '2017-06-12'
   s.summary     = "VdoCipher API interface"
   s.description = "Stream and manage videos hosted through vdocipher streaming service."
   s.authors     = ["Vibhav Sinha"]
   s.email       = 'info@vdocipher.com'
   s.files       = ["lib/vdocipher.rb"]
   s.homepage    =
-    'http://www.vdocipher.com/api.ror'
-  s.license       = 'GPL'
+    'https://www.vdocipher.com/blog/2015/09/videos-in-rails-with-vdocipher-gem/'
+  s.license       = 'GPL-3.0+'
 end
