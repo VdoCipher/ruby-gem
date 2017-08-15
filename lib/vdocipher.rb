@@ -1,6 +1,7 @@
 require "net/http"
 require "json"
 class VdoCipher
+  @@version = '1.0.1'
   def initialize(conf)
     @key = conf[:clientSecretKey]
   end
