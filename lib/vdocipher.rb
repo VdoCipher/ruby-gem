@@ -1,28 +1,28 @@
 require "net/http"
 require "json"
 class VdoCipher
-	def initialize(conf)
-		@key = conf[:clientSecretKey]
-	end
-	def play_code(id, attr="", theme="9ae8bbe8dd964ddc9bdb932cca1cb59a")
-		if (@key == nil)
-			return "key not set"
-		end
-		url = URI.parse('https://api.vdocipher.com/v2/otp?video='+ id)
-		req = Net::HTTP::Post.new(url.to_s)
-		req.body = 'clientSecretKey=' + @key
-		res = Net::HTTP.start(url.host, url.port, use_ssl:true) {|http|
-					http.request(req)
-		}
-		if(res.code != "200")
-			return res.code
-		end
-		otp = JSON.parse(res.body)
-		if( otp['error'] == "No video found" )
-			return "video not found"
-		end
+  def initialize(conf)
+    @key = conf[:clientSecretKey]
+  end
+  def play_code(id, attr="", theme="9ae8bbe8dd964ddc9bdb932cca1cb59a")
+    if (@key == nil)
+      return "key not set"
+    end
+    url = URI.parse('https://api.vdocipher.com/v2/otp?video='+ id)
+    req = Net::HTTP::Post.new(url.to_s)
+    req.body = 'clientSecretKey=' + @key
+    res = Net::HTTP.start(url.host, url.port, use_ssl:true) {|http|
+          http.request(req)
+    }
+    if(res.code != "200")
+      return res.code
+    end
+    otp = JSON.parse(res.body)
+    if( otp['error'] == "No video found" )
+      return "video not found"
+    end
     # make the theme configurable
-		embedcode = <<EOS
+    embedcode = <<EOS
 <div id="vdo%s" %s></div>
 <script>
 (function(v,i,d,e,o){v[o]=v[o]||{}; v[o].add = v[o].add || function V(a){ (v[o].d=v[o].d||[]).push(a);};
@@ -40,7 +40,7 @@ vdo.add({
 </script>
 
 EOS
-		embedcode = embedcode % [otp["otp"], attr, otp["otp"], id, theme, otp["otp"]]
-	end
+    embedcode = embedcode % [otp["otp"], attr, otp["otp"], id, theme, otp["otp"]]
+  end
 end
 
