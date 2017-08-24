@@ -1,9 +1,12 @@
 require "net/http"
 require "json"
 class VdoCipher
-  @@version = '1.0.1'
-  def initialize(conf)
+  @@version = '1.1.0'
+  attr_reader :version
+
+  def initialize(conf, version = '1.1.3')
     @key = conf[:clientSecretKey]
+    @version = version
   end
   def play_code(id, attr="", theme="9ae8bbe8dd964ddc9bdb932cca1cb59a")
     if (@key == nil)
@@ -16,7 +19,7 @@ class VdoCipher
           http.request(req)
     }
     if(res.code != "200")
-      return res.code
+      return 'Status code error: ' + res.code
     end
     otp = JSON.parse(res.body)
     if( otp['error'] == "No video found" )
@@ -29,7 +32,7 @@ class VdoCipher
 (function(v,i,d,e,o){v[o]=v[o]||{}; v[o].add = v[o].add || function V(a){ (v[o].d=v[o].d||[]).push(a);};
 if(!v[o].l) { v[o].l=1*new Date(); a=i.createElement(d), m=i.getElementsByTagName(d)[0];
 a.async=1; a.src=e; m.parentNode.insertBefore(a,m);}
-})(window,document,"script","https://d1z78r8i505acl.cloudfront.net/playerAssets/vdo.js","vdo");
+})(window,document,"script","https://d1z78r8i505acl.cloudfront.net/playerAssets/%s/vdo.js","vdo");
 vdo.add({
   otp: "%s",
   playbackInfo: btoa(JSON.stringify({
@@ -41,7 +44,7 @@ vdo.add({
 </script>
 
 EOS
-    embedcode = embedcode % [otp["otp"], attr, otp["otp"], id, theme, otp["otp"]]
+    embedcode = embedcode % [otp["otp"], attr, version, otp["otp"], id, theme, otp["otp"]]
   end
 end
 

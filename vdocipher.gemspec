@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'vdocipher'
-  s.version     = '1.0.1'
-  s.date        = '2017-06-12'
+  s.version     = '1.1.0'
+  s.date        = '2017-08-24'
   s.summary     = "VdoCipher API interface"
   s.description = "Stream and manage videos hosted through vdocipher streaming service."
   s.authors     = ["Vibhav Sinha"]
